@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, fields, api
+from codicefiscale import isvalid
 
 
 class ResPartner(models.Model):
@@ -14,7 +15,7 @@ class ResPartner(models.Model):
         for partner in self:
             if not partner.fiscalcode:
                 return True
-            elif len(partner.fiscalcode) != 16 and partner.individual:
+            elif not isvalid(partner.fiscalcode) and partner.individual:
                 return False
             else:
                 return True
